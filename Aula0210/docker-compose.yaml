@@ -1,0 +1,36 @@
+name: outstock
+
+services:
+  flask:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USER: admdimdim
+      DB_PASSWORD: admdimdim
+      DB_NAME: admdimdim
+      DB_HOST: mysql
+      DB_PORT: 3306
+    networks:
+      - outstock_network
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: admdimdim
+      MYSQL_PASSWORD: admdimdim
+      MYSQL_DATABASE: out_stock
+      MYSQL_ROOT_PASSWORD: admdimdim
+    networks:
+      - outstock_network
+    volumes:
+      - db_data:/var/lib/mysql
+
+networks:
+  outstock_network:
+  
+volumes:
+  db_data:
